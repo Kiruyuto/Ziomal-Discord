@@ -1,5 +1,8 @@
 # Dependencies
 node_modules/
 
-#Discord TOKEN is stored in .env file
+# Discord TOKEN, and other vulnerable data
 .env
+
+# Other Files
+Assets/id.ts

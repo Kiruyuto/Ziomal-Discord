@@ -1,0 +1,5 @@
+# Discord Token:
+DC_TOKEN=XYZ123
+
+# MongoDB:
+MONGO_URI=YOUR_URI
