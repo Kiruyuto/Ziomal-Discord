@@ -4,4 +4,10 @@
 ### Requirements
 [Node v16](https://nodejs.org/en/download/) or higher  
 [discord.js](https://discord.js.org/#/) v13 (Recommended)  
-**TBC**
+**TBC**  
+  
+  
+#### Dependencies  
+Distube  
+WOKCommands  
+**TBC**  
