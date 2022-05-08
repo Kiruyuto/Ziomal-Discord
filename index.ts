@@ -1,8 +1,9 @@
 import DCJS, { Intents } from 'discord.js'
-import { DisTube, YouTubeDLPlugin } from 'distube'
+import { DisTube } from 'distube'
+import { YtDlpPlugin } from '@distube/yt-dlp'
 import WOK from 'wokcommands'
 import path from 'path'
-import ID from './Utils/id'
+import ID from './assets/id'
 import 'dotenv/config'
 
 
@@ -37,14 +38,16 @@ export const distube = new DisTube(client, {
   leaveOnEmpty: true,
   leaveOnFinish: false,
   leaveOnStop: true,
-  savePreviousSongs: true,
+  savePreviousSongs: false,
   searchSongs: 0,
   //youtubeCookie: process.env.YOUTUBE_COOKIE,
-  youtubeDL: true,
-  updateYouTubeDL: true,
+  youtubeDL: false,
   ytdlOptions: {
+    filter: 'audioonly',
     highWaterMark: 1024 * 1024 * 64,
     quality: 'highestaudio',
+    dlChunkSize: 1024 * 1024 * 64,
+    liveBuffer: 60000,
   },
   searchCooldown: 30,
   emptyCooldown: 300,
@@ -52,7 +55,7 @@ export const distube = new DisTube(client, {
   emitAddSongWhenCreatingQueue: true,
   emitAddListWhenCreatingQueue: true,
   plugins: [ 
-    new YouTubeDLPlugin() 
+    new YtDlpPlugin(), 
   ],
 })
 
@@ -60,10 +63,9 @@ client.on('ready', () => {
     const guild = client.guilds.cache.get(ID.GUILD)
     if(!guild) { return console.error('Guild not found') }
 
-    //WOK CLIENT
-    new WOK(client, {
-      commandDir: path.join(__dirname, 'Commands'), 
-      featureDir: path.join(__dirname, 'Features'),
+    const wok = new WOK(client, {
+      commandDir: path.join(__dirname, 'commands'), 
+      featureDir: path.join(__dirname, 'features'),
       testServers: ID.GUILD_TEST, 
       botOwners: ID.KIRU, 
       delErrMsgCooldown: 5, 
@@ -73,14 +75,24 @@ client.on('ready', () => {
       // The fields below should be commented when using on prod servers
       //debug: true, // Display more information in the console
       //showWarns: true, // Display warnings in the console
-  })
-  .setDefaultPrefix('!') 
-  .setColor('#531D89')
-  .setDisplayName('Ziomal')
+    })
+    .setDefaultPrefix('!') 
+    .setColor('#531D89')
+    .setDisplayName('Ziomal')
 
+    wok.on('databaseConnected', async (connection: any, state: any) => {
+      console.log(`Database connection state is [${state}]\n`)
+    })
+    wok.on('languageNotSupported', (guild: any, lang: any) => {
+      console.log(`"${guild.name}" Attempted to set language to "${lang}"`)
+    })
+  
   const guildCounter  = client.guilds.cache.size
-  console.log(`\n${client.user?.tag} is online!\nCurrently used in: ${guildCounter} guild${guildCounter === 1 ? '' : 's'}!\n`)
+  console.log(`\n[${client.user?.tag}] is online!\nCurrently used in: [${guildCounter} guild${guildCounter === 1 ? '' : 's'}]!`)
+
+
 })
+
 
 
 const token = process.env.DC_TOKEN

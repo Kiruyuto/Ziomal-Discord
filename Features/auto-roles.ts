@@ -10,7 +10,7 @@ import {
 } from 'discord.js'
 import WOK from 'wokcommands'
 import roleSchema from './models/roles-schema'
-import ID from '../Utils/id'
+import ID from '../assets/id'
 
 const LARoles = {
   //ASSASINS

@@ -1,11 +1,6 @@
-import { 
-  VoiceChannel,
-  GuildMember,
-} from 'discord.js';
 import { ICommand } from 'wokcommands';
 import { distube } from '../..';
-import Emotes from '../../Utils/emojis';
-import id from '../../Utils/id';
+import Emotes from '../../assets/emojis';
 
 export default {
   names: ['play'],
