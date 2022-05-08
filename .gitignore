@@ -6,3 +6,6 @@ node_modules/
 
 # Other Files
 Assets/id.ts
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe

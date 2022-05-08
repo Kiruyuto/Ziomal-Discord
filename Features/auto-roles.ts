@@ -2,55 +2,53 @@ import {
   Client,
   GuildEmoji,
   GuildMember,
-  Interaction,
   Message,
   MessageActionRow,
-  MessageButton,
   MessageSelectMenu,
   MessageSelectOptionData,
   TextChannel,
 } from 'discord.js'
-import WOKCommands from 'wokcommands'
+import WOK from 'wokcommands'
 import roleSchema from './models/roles-schema'
 import ID from '../Utils/id'
 
 const LARoles = {
-  //Assasins
-  ':XDeathblade': [ID.DEATHBLADE, 'Deathblade'],
-  ':XShadowhunter': [ID.SHADOWHUNTER, 'Shadowhunter'],
-  //Gunners
-  ':XArtillerist': [ID.ARTILLERIST, 'Artillerist'],
-  ':XDeadeye': [ID.DEADEYE, 'Deadeye'],
-  ':XGunslinger': [ID.GUNSLINGER, 'Gunslinger'],
-  ':XSharpshooter': [ID.SHARPSHOOTER, 'Sharpshooter'],
-  //Mages
-  ':XBard': [ID.BARD, 'Bard'],
-  ':XSorceress': [ID.SORCERESS, 'Sorceress'],
-  //Martial Artists
-  ':XGlavier': [ID.GLAIVIER, 'Glavier'],
-  ':XScrapper': [ID.SCRAPPER, 'Scrapper'],
-  ':XSoulfist': [ID.SOULFIST, 'Soulfist'],
-  ':XStriker': [ID.STRIKER, 'Striker'],
-  ':XWardancer': [ID.WARDANCER, 'Wardancer'],
-  //Warriors
-  ':XBerserker': [ID.BERSERKER, 'Berserker'],
-  ':XDestroyer': [ID.DESTROYER, 'Destroyer'],
-  ':XGunlancer': [ID.GUNLANCER, 'Gunlancer'],
-  ':XPaladin': [ID.PALADIN, 'Paladin'],
+  //ASSASINS
+  ':XDeathblade': [ID.DEATHBLADE, 'Deathblade', 'Assasin'],
+  ':XShadowhunter': [ID.SHADOWHUNTER, 'Shadowhunter', 'Assasin'],
+  //GUNNERS
+  ':XArtillerist': [ID.ARTILLERIST, 'Artillerist', 'Gunner'],
+  ':XDeadeye': [ID.DEADEYE, 'Deadeye', 'Gunner'],
+  ':XGunslinger': [ID.GUNSLINGER, 'Gunslinger', 'Gunner'],
+  ':XSharpshooter': [ID.SHARPSHOOTER, 'Sharpshooter', 'Gunner'],
+  //MAGES
+  ':XBard': [ID.BARD, 'Bard', 'Mage'],
+  ':XSorceress': [ID.SORCERESS, 'Sorceress', 'Mage'],
+  //MARTIAL ARTISTS
+  ':XGlaivier': [ID.GLAIVIER, 'Glaivier', 'Martial Artist'],
+  ':XScrapper': [ID.SCRAPPER, 'Scrapper', 'Martial Artist'],
+  ':XSoulfist': [ID.SOULFIST, 'Soulfist', 'Martial Artist'],
+  ':XStriker': [ID.STRIKER, 'Striker', 'Martial Artist'],
+  ':XWardancer': [ID.WARDANCER, 'Wardancer', 'Martial Artist'],
+  //WARRIORS
+  ':XBerserker': [ID.BERSERKER, 'Berserker', 'Warrior'],
+  ':XDestroyer': [ID.DESTROYER, 'Destroyer', 'Warrior'],
+  ':XGunlancer': [ID.GUNLANCER, 'Gunlancer', 'Warrior'],
+  ':XPaladin': [ID.PALADIN, 'Paladin', 'Warrior'],
 } as {
   [key: string]: string[]
 }
 
-export default async (client: Client, instance: WOKCommands) => {
+export default async (client: Client, instance: WOK) => {
   if(!instance.isDBConnected()) {
     return
   }
 
   const guild = client.guilds.cache.get(ID.GUILD)
-  if(!guild) { 
+  if(!guild) {
     return
   }
-  
+
   const channel = guild.channels.cache.get(
     ID.ROLE_CLAIM_CHANNEL
   ) as TextChannel
@@ -62,26 +60,28 @@ export default async (client: Client, instance: WOKCommands) => {
   const keys = Object.keys(LARoles)
   const rows: MessageActionRow[] = []
   const options: MessageSelectOptionData[] = []
-  const messageText = 'Ktorymi klasami grasz?'
+  const text = 'Ktorymi klasami grasz?'
 
-  for(let i = 0; i < keys.length; ++i) {
-  let emoji: string | GuildEmoji = keys[i]
-  const [id, desc] = LARoles[emoji]
+  for(let a = 0; a < keys.length; ++a) {
+    let emoji: string | GuildEmoji = keys[a]
+    const [id, roleName, desc] = LARoles[emoji]
 
-  if(emoji.startsWith(':')) {
-    emoji = guild.emojis.cache.find((e) => {
-      if (typeof emoji === 'string') {
-        return e.name === emoji.substring(1)
-      }
+    if(emoji.startsWith(':')) {
+      emoji = guild.emojis.cache.find((e) => {
+        if (typeof emoji === 'string') {
+          return e.name === emoji.substring(1)
+        }
 
-      return false
-    }) as GuildEmoji
-  }
-  options.push({
-    label: desc,
-    value: id,
-    emoji,
-  })
+        return false
+      }) as GuildEmoji
+    }
+
+    options.push({
+      label: roleName,
+      value: id,
+      emoji,
+      description: desc
+    })
   }
 
   rows.push(
@@ -90,12 +90,12 @@ export default async (client: Client, instance: WOKCommands) => {
         .setCustomId('role_select')
         .setMinValues(0)
         .setMaxValues(options.length)
-        .setPlaceholder('Wybierz swoje role...')
+        .setPlaceholder('Select Your Roles...')
         .addOptions(options)
     )
   )
 
-  if (results) {
+  if(results) {
     const message = (await channel.messages
       .fetch(results.messageId, {
         cache: true,
@@ -103,19 +103,19 @@ export default async (client: Client, instance: WOKCommands) => {
       })
       .catch(() => {})) as Message
 
-      if(message) {
-        message.edit({
-          content: messageText,
-          components: rows,
-        }) 
-      } else { 
-        results = null 
-      }
+    if (message) {
+      message.edit({
+        content: text,
+        components: rows,
+      })
+    } else {
+      results = null
+    }
   }
 
   if(!results) {
     const message = await channel.send({
-      content: messageText,
+      content: text,
       components: rows,
     })
 
@@ -124,8 +124,8 @@ export default async (client: Client, instance: WOKCommands) => {
         _id: guild.id,
       },
       {
-      _id: guild.id,
-      messageId: message.id,
+        _id: guild.id,
+        messageId: message.id,
       },
       {
         upsert: true,
@@ -134,16 +134,16 @@ export default async (client: Client, instance: WOKCommands) => {
   }
 
   client.on('interactionCreate', (interaction) => {
-    if(
+    if (
       !interaction.isSelectMenu() ||
       interaction.channelId !== ID.ROLE_CLAIM_CHANNEL
     ) {
       return
     }
 
-    const {customId, values, member } = interaction
+    const { customId, values, member } = interaction
 
-    if(customId !== 'role_select' && member instanceof GuildMember) {
+    if(customId === 'role_select' && member instanceof GuildMember) {
       const component = interaction.component as MessageSelectMenu
       const removed = component.options.filter(
         (role) => !values.includes(role.value)
@@ -152,14 +152,15 @@ export default async (client: Client, instance: WOKCommands) => {
         member.roles.remove(id.value)
       }
 
-      for(const id of values) { 
+      for(const id of values) {
         member.roles.add(id)
       }
 
       interaction.reply({
         ephemeral: true,
-        content: 'Zaktualizowano twoje role!',
+        content: 'Roles updated!',
       })
+      //console.log(`[${member.user.tag}] Roles updated!`)
     }
   })
 }

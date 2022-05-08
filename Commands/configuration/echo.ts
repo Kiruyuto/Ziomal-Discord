@@ -2,6 +2,8 @@ import { TextChannel } from 'discord.js';
 import { ICommand } from 'wokcommands';
 
 export default {
+  names: ['echo'],
+  aliases: ['say'],
   category: 'Configuration',
   description: 'Sends msg in a channel',
 
