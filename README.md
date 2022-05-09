@@ -11,3 +11,12 @@
 Distube  
 WOKCommands  
 **TBC**  
+
+# TODO:
+- [ ] Make all commands both slash and text based
+- [ ] Add embed to *nowPlaying.ts*
+- [ ] Add embed to *skip.ts*
+- [ ] Add embed to *shuffle.ts*
+- [ ] Finish queue command
+- [ ] Add IDs for test server & roles in *id.ts*
+- [ ] Fix *join.ts* bug with returned messages
