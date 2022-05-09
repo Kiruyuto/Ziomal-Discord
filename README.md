@@ -20,3 +20,5 @@ WOKCommands
 - [ ] Finish queue command
 - [ ] Add IDs for test server & roles in *id.ts*
 - [ ] Fix *join.ts* bug with returned messages
+- [ ] Add more music commands
+- [ ] Add custom help menu
