@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js';
-import { ICommand } from 'wokcommands';
+import { ICommand } from 'wokcommands-fixed';
 
 export default {
   names: ['echo'],
@@ -7,10 +7,12 @@ export default {
   category: 'Configuration',
   description: 'Sends msg in a channel',
 
-  permissions: ['ADMINISTRATOR'],
+  //permissions: ['ADMINISTRATOR'],
   slash: 'both',
+  ownerOnly: true,
   guildOnly: true,
-  testOnly: true,
+  //testOnly: true,
+  hidden: true,
 
   minArgs: 2,
   expectedArgs: '<channel> <message>',

@@ -1,6 +1,9 @@
-import { ICommand } from 'wokcommands';
+import { ICommand } from 'wokcommands-fixed';
 import { distube } from '../..';
 import Emotes from '../../assets/emojis';
+import DCJS from 'discord.js';
+import colorList from '../../assets/colors';
+
 
 export default {
   names: ['play'],
@@ -9,7 +12,6 @@ export default {
   description: 'Play a song or a playlist',
   
   slash: false,
-  testOnly: true,
   guildOnly: true,
 
   minArgs: 1,
@@ -25,14 +27,33 @@ export default {
     if(message.guild?.me?.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) { 
       return `You have to be in the same voice channel as the bot to use this command! ${Emotes.DZBANEK}`
     }
-    
-    distube.play(channel, args[0])
 
-    //let embed = new client.Discord.MessageEmbed()
+    await distube.play(channel, args[0])
+    const queue = await distube.getQueue(message)
+
+    let embed = new DCJS.MessageEmbed({
+      author: {
+        name: `${client.user?.username} | Music menu`,
+        iconURL: `${message.member.displayAvatarURL()}`,
+      },
+      color: `${colorList.embedDefault}`,
+      thumbnail: {
+        url: `${queue?.songs[0]?.thumbnail}`,
+      },
+      description: `Now Playing: **${queue?.songs[0]?.name}**`,
+      fields: [
+        { name: 'Duration', value: `${queue?.songs[0].formattedDuration}`, inline: true },
+        { name: 'Queue', value: `${queue?.songs.length}`, inline: true },
+        { name: 'Volume', value: `${queue?.volume}`, inline: true },
+
+        { name: 'Added by', value: `\@${message.author.tag}`, inline: true },
+        { name: 'Link', value: `[Click!](${queue?.songs[0]?.url})`, inline: true},
+        { name: 'Repeat', value: `${queue?.repeatMode}`, inline: true },
+
+      ],
+    })
 
 
-    return `${channel}`
-  
-
+    return embed
   },
 } as ICommand;

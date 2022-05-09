@@ -1,10 +1,13 @@
-import DCJS, { Intents } from 'discord.js'
+import DCJS, { Channel, Intents, Message } from 'discord.js'
 import { DisTube } from 'distube'
 import { YtDlpPlugin } from '@distube/yt-dlp'
-import WOK from 'wokcommands'
+import WOK from 'wokcommands-fixed'
 import path from 'path'
 import ID from './assets/id'
 import 'dotenv/config'
+import emojis from './assets/emojis';
+import colorList from './assets/colors';
+import { MessageEmbed } from 'discord.js';
 
 
 const client = new DCJS.Client({
@@ -66,9 +69,11 @@ client.on('ready', () => {
     const wok = new WOK(client, {
       commandDir: path.join(__dirname, 'commands'), 
       featureDir: path.join(__dirname, 'features'),
+      messagesPath: path.join(__dirname, 'languages/langs.json'),
+      defaultLanguage: 'english',
       testServers: ID.GUILD_TEST, 
       botOwners: ID.KIRU, 
-      delErrMsgCooldown: 5, 
+      delErrMsgCooldown: -1, 
       ignoreBots: true,
       typeScript: true, 
       mongoUri: process.env.MONGO_URI,
@@ -77,12 +82,11 @@ client.on('ready', () => {
       //showWarns: true, // Display warnings in the console
     })
     .setDefaultPrefix('!') 
-    .setColor('#531D89')
-    .setDisplayName('Ziomal')
 
     wok.on('databaseConnected', async (connection: any, state: any) => {
       console.log(`Database connection state is [${state}]\n`)
     })
+
     wok.on('languageNotSupported', (guild: any, lang: any) => {
       console.log(`"${guild.name}" Attempted to set language to "${lang}"`)
     })
@@ -92,6 +96,7 @@ client.on('ready', () => {
 
 
 })
+
 
 
 
