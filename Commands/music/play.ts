@@ -1,7 +1,9 @@
 import DCJS, { 
   GuildMember, 
+  Interaction, 
   MessageActionRow, 
   MessageButton, 
+  MessageComponentInteraction, 
   VoiceChannel 
 } from 'discord.js';
 import { Song } from 'distube';
@@ -27,27 +29,37 @@ export default {
   expectedArgsTypes: ['STRING'],
 
 
-  callback: async ({ client, message, args, interaction }) => {
+  callback: async ({ channel, client, message, args, interaction: slashCmd }) => {
     
+    // Get the voice channel ID 
     const channelId = message 
     ? message.member?.voice.channel
-    : (interaction.member as GuildMember).voice.channel as VoiceChannel
+    : (slashCmd.member as GuildMember).voice.channel as VoiceChannel
 
+    // Check if the user is in a voice channel
     if(!channelId) {
       return 'You need to be in a voice channel!'
     }
     
+    const embedSameChannel = new DCJS.MessageEmbed({
+      color: `${colorList.embedDefault}`,
+      description: 'You need to be in the same channel as me!',
+    })
 
-    //Funkcja na sprawdzanie czy {USER} znajduje sie na tym samym kanale !!!!
+    //Check if the user is in the same channel as the bot
+    if((message ? message.guild?.me?.voice.channel : slashCmd.guild?.me?.voice.channel) && (message ? message.member?.voice.channel?.id : (slashCmd.member as GuildMember).voice.channel?.id) !== (message ? message.guild?.me?.voice.channel?.id : slashCmd.guild?.me?.voice.channel?.id)) {
+      return embedSameChannel
+    }
 
     
-    let queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
+    let queue = await distube.getQueue(message ? message : (slashCmd.member as GuildMember).guild.id)
+
     if(!queue) { 
       await distube.play(channelId, args[0])
-      queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
+      queue = await distube.getQueue(message ? message : (slashCmd.member as GuildMember).guild.id)
     } else {
       await distube.play(channelId, args[0])
-      queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
+      queue = await distube.getQueue(message ? message : (slashCmd.member as GuildMember).guild.id)
     }
 
     const queueLength = queue?.songs.length! - 1
@@ -55,7 +67,7 @@ export default {
     const embed = new DCJS.MessageEmbed({
       author: {
         name: `${client.user?.username} | Music menu`,
-        iconURL: `${message ? message.member?.displayAvatarURL() : (interaction.member as GuildMember).user.displayAvatarURL()}`,
+        iconURL: `${message ? message.member?.displayAvatarURL() : (slashCmd.member as GuildMember).user.displayAvatarURL()}`,
       },
       color: `${colorList.embedDefault}`,
       thumbnail: {
@@ -67,34 +79,21 @@ export default {
         { name: 'Queue Pos', value: `${queue?.songs.length}`, inline: true },
         { name: 'Volume', value: `${queue?.volume}`, inline: true },
 
-        { name: 'Added by', value: `<\@${message ? message.author.id : (interaction.member as GuildMember).id}>`, inline: true },
+        { name: 'Added by', value: `<\@${message ? message.author.id : (slashCmd.member as GuildMember).id}>`, inline: true },
         { name: 'Link', value: `[Click!](${queue?.songs[queueLength]?.url})`, inline: true},
         { name: 'Repeat', value: `${queue?.repeatMode}`, inline: true },
 
       ],
     })
-    const row = new MessageActionRow()
-     .addComponents(
-       new MessageButton()
-        .setCustomId('pause')
-        .setEmoji('⏸')
-        .setLabel('Pause')
-        .setStyle('PRIMARY')
-     )
 
-
-
-
-    // === return ===
+    // Returns on message/interaction
      if(message) {
        await message.reply({
          embeds: [embed],
-         components: [row]
        })
      } else {
-        await interaction.reply({
+        await slashCmd.reply({
         embeds: [embed],
-        components: [row]
         })
      }
   },
