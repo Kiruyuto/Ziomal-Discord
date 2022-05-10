@@ -1,8 +1,15 @@
-import { ICommand } from 'wokcommands-fixed';
+import DCJS, { 
+  GuildMember, 
+  MessageActionRow, 
+  MessageButton, 
+  VoiceChannel 
+} from 'discord.js';
+import { Song } from 'distube';
+import { ICommand } from 'wokcommands';
 import { distube } from '../..';
-import Emotes from '../../assets/emojis';
-import DCJS from 'discord.js';
 import colorList from '../../assets/colors';
+import Guild from 'discord.js';
+import emojis from '../../assets/emojis';
 
 
 export default {
@@ -11,49 +18,84 @@ export default {
   category: 'Music',
   description: 'Play a song or a playlist',
   
-  slash: false,
+  slash: 'both',
+  testOnly: true,
   guildOnly: true,
 
   minArgs: 1,
-  expectedArgs: '<songURL>',
+  expectedArgs: '<URL>',
   expectedArgsTypes: ['STRING'],
 
 
-  callback: async ({client, message, args}) => {
-    const channel = message.member?.voice.channel// as VoiceChannel;
-    if(!channel) {
-      return 'You need to be in a voice channel'
+  callback: async ({ client, message, args, interaction }) => {
+    
+    const channelId = message 
+    ? message.member?.voice.channel
+    : (interaction.member as GuildMember).voice.channel as VoiceChannel
+
+    if(!channelId) {
+      return 'You need to be in a voice channel!'
     }
-    if(message.guild?.me?.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) { 
-      return `You have to be in the same voice channel as the bot to use this command! ${Emotes.DZBANEK}`
+    
+
+    //Funkcja na sprawdzanie czy {USER} znajduje sie na tym samym kanale !!!!
+
+    
+    let queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
+    if(!queue) { 
+      await distube.play(channelId, args[0])
+      queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
+    } else {
+      await distube.play(channelId, args[0])
+      queue = await distube.getQueue(message ? message : (interaction.member as GuildMember).guild.id)
     }
 
-    await distube.play(channel, args[0])
-    const queue = await distube.getQueue(message)
+    const queueLength = queue?.songs.length! - 1
 
-    let embed = new DCJS.MessageEmbed({
+    const embed = new DCJS.MessageEmbed({
       author: {
         name: `${client.user?.username} | Music menu`,
-        iconURL: `${message.member.displayAvatarURL()}`,
+        iconURL: `${message ? message.member?.displayAvatarURL() : (interaction.member as GuildMember).user.displayAvatarURL()}`,
       },
       color: `${colorList.embedDefault}`,
       thumbnail: {
-        url: `${queue?.songs[0]?.thumbnail}`,
+        url: `${queue?.songs[queueLength]?.thumbnail}`,
       },
-      description: `Now Playing: **${queue?.songs[0]?.name}**`,
+      description: `Added to queue: **${queue?.songs[queueLength].name}**`,
       fields: [
-        { name: 'Duration', value: `${queue?.songs[0].formattedDuration}`, inline: true },
-        { name: 'Queue', value: `${queue?.songs.length}`, inline: true },
+        { name: 'Duration', value: `${queue?.songs[queueLength].formattedDuration}`, inline: true },
+        { name: 'Queue Pos', value: `${queue?.songs.length}`, inline: true },
         { name: 'Volume', value: `${queue?.volume}`, inline: true },
 
-        { name: 'Added by', value: `\@${message.author.tag}`, inline: true },
-        { name: 'Link', value: `[Click!](${queue?.songs[0]?.url})`, inline: true},
+        { name: 'Added by', value: `<\@${message ? message.author.id : (interaction.member as GuildMember).id}>`, inline: true },
+        { name: 'Link', value: `[Click!](${queue?.songs[queueLength]?.url})`, inline: true},
         { name: 'Repeat', value: `${queue?.repeatMode}`, inline: true },
 
       ],
     })
+    const row = new MessageActionRow()
+     .addComponents(
+       new MessageButton()
+        .setCustomId('pause')
+        .setEmoji('⏸')
+        .setLabel('Pause')
+        .setStyle('PRIMARY')
+     )
 
 
-    return embed
+
+
+    // === return ===
+     if(message) {
+       await message.reply({
+         embeds: [embed],
+         components: [row]
+       })
+     } else {
+        await interaction.reply({
+        embeds: [embed],
+        components: [row]
+        })
+     }
   },
 } as ICommand;
