@@ -8,7 +8,7 @@ import {
   MessageSelectOptionData,
   TextChannel,
 } from 'discord.js'
-import WOK from 'wokcommands-fixed'
+import WOK from 'wokcommands'
 import roleSchema from './models/roles-schema'
 import ID from '../assets/id'
 

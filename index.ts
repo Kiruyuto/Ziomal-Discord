@@ -1,7 +1,7 @@
 import DCJS, { Channel, Intents, Message } from 'discord.js'
 import { DisTube } from 'distube'
 import { YtDlpPlugin } from '@distube/yt-dlp'
-import WOK from 'wokcommands-fixed'
+import WOK from 'wokcommands'
 import path from 'path'
 import ID from './assets/id'
 import 'dotenv/config'

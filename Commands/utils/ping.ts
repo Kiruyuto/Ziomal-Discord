@@ -1,4 +1,4 @@
-import { ICommand } from 'wokcommands-fixed';
+import { ICommand } from 'wokcommands';
 
 export default {
   names: ['ping'],

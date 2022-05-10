@@ -1,4 +1,4 @@
-import { ICommand } from 'wokcommands-fixed';
+import { ICommand } from 'wokcommands';
 import { distube } from '../../index';
 import DCJS, { VoiceChannel } from 'discord.js';
 import playCommand from '../music/play';
@@ -12,6 +12,7 @@ export default {
   description: 'Joins the voice channel of the user',
 
   slash: false,
+  testOnly: true,
   guildOnly: true,
   maxArgs: 0,
 

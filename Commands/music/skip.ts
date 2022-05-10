@@ -1,4 +1,4 @@
-import { ICommand } from 'wokcommands-fixed';
+import { ICommand } from 'wokcommands';
 import { distube } from '../../index';
 import DCJS from 'discord.js';
 import playCommand from '../music/play';
@@ -12,6 +12,7 @@ export default {
 
   slash: false,
   guildOnly: true,
+  testOnly: true,
 
   maxArgs: 0,
 

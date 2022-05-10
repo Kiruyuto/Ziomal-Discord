@@ -1,4 +1,4 @@
-import { ICommand } from 'wokcommands-fixed';
+import { ICommand } from 'wokcommands';
 import { distube } from '../..';
 import DCJS from 'discord.js';
 import playCommand from '../music/play';
@@ -11,6 +11,7 @@ category: 'Music',
 description: 'Show the queue',
 
 slash: false,
+testOnly: true,
 guildOnly: true,
 
 minArgs: 0,

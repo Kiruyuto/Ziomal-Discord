@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js';
-import { ICommand } from 'wokcommands-fixed';
+import { ICommand } from 'wokcommands';
 
 export default {
   names: ['echo'],
@@ -11,7 +11,7 @@ export default {
   slash: 'both',
   ownerOnly: true,
   guildOnly: true,
-  //testOnly: true,
+  testOnly: true,
   hidden: true,
 
   minArgs: 2,
