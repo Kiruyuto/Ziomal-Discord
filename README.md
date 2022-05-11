@@ -14,29 +14,24 @@ WOKCommands
 
 # So far these are the only valuable informations 
 ## TODO:
-- [ ] Make all commands both slash and text based
-- [ ] Add embed to *nowPlaying.ts*
-- [ ] Add embed to *skip.ts*
-- [ ] Add embed to *shuffle.ts*
-- [ ] Finish queue command
+- [x] Make all commands both slash and text based (legacy)
+- [x] Standardize all bot responses to a single format (Discord embeds)
 - [ ] Add IDs for test server & roles in *id.ts*
-- [ ] Fix *join.ts* bug with returned messages
+- [x] Fix *join.ts* bug with returned messages
 - [ ] Add more music commands
 - [ ] Add custom help menu  
 
 ## HIGH PRIO TODO:
-- [ ] Add check functions to every music command
+- [x] Add check functions to every music command to avoid errors
 ## LOW PRIO TODO:
 - [ ] Add buttons to !play
+- [ ] Add a language support to all commands
 ### Finished, bug-free command:
 - [x] !play
-- [ ] !skip
-- [ ] !join
-- [ ] !leave
-- [ ] !nowplaying
-- [ ] !skip
-- [ ] !shuffle
+- [x] !join
+- [x] !np
+- [x] !skip
+- [x] !dc
+- [x] !shuffle
 - [ ] !queue
-- [ ] !clearqueue
-
-
+- [ ] !cls
