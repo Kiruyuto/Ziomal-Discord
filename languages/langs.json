@@ -86,7 +86,7 @@
   "SYNTAX_ERROR": {
     "english": "Incorrect usage! Please use: `{PREFIX}{COMMAND} {ARGUMENTS}`",
     "polish": "Nieprawidłowa składnia! Użyj: `{PREFIX}{COMMAND} {ARGUMENTS}`"
-  },  
+  },
   "NO_DATABASE_FOUND": {
     "english": "No database connection found.",
     "polish": "Nie znaleziono połączenia z bazą danych."
@@ -136,7 +136,6 @@
     "polish": "Musisz określić, które role mogą używać tej komendy za pomocą `{PREFIX}requiredroles {COMMAND} <ID roli>`."
   },
 
-
   "HELP_MENU": {
     "TITLE": {
       "english": "Help Menu",
@@ -150,7 +149,7 @@
       "english": "Commands",
       "polish": "Komendy"
     },
-    "DESCRIPTION_FIRST_LINE": { 
+    "DESCRIPTION_FIRST_LINE": {
       "english": "Use 🚪 to go back",
       "polish": "Użyj 🚪 aby powrócić"
     },
@@ -168,4 +167,3 @@
     }
   }
 }
-
