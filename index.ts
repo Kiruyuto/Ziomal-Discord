@@ -95,7 +95,7 @@ client.on('ready', () => {
     })
  
   const guildCounter  = client.guilds.cache.size
-  console.log(`\n[${client.user?.tag}] is online!\nCurrently used in: [${guildCounter}] guilds`)
+  console.log(`\n[${client.user?.tag}] is online!\nCurrently used in: [${guildCounter} guilds]`)
 
   // distube events
   distube.on("initQueue", queue => {

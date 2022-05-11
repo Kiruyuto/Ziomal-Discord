@@ -1,8 +1,8 @@
 import { ICommand } from 'wokcommands';
-import DCJS, { GuildMember } from 'discord.js';
+import DCJS from 'discord.js';
 import IDs from '../../assets/id';
 import colorValues from '../../assets/colors';
-import { distube } from '../../index';
+
 
 export default {
   names: ['server', 'guild'],
@@ -19,6 +19,7 @@ export default {
     try {
       const guild = message ? message.guild : slashCmd.guild
       if (!guild) { return }
+      const members = await guild.members.fetch()
       const guildInfo = new DCJS.MessageEmbed({
         title: `${guild.name}`,
         description: `${guild.name} was created on ${`<t:${Math.round(new Date(guild.createdTimestamp).getTime() / 1000)}:F>`}`,
@@ -26,8 +27,8 @@ export default {
         thumbnail: { url: `${guild.iconURL({ dynamic: true })}` ?? "https://i.imgur.com/0ABYGXT.png" },
         fields: [
           { name: 'Total Members', value: `${guild.memberCount}`, inline: true },
-          { name: 'Total Humans', value: `${guild.members.cache.filter((m) => !m.user.bot).size}`, inline: true },
-          { name: 'Total Bots', value: `${guild.members.cache.filter(m => m.user.bot).size}`, inline: true },
+          { name: 'Total Humans', value: `${guild.members.cache.filter(members => !members.user.bot).size}`, inline: true },
+          { name: 'Total Bots', value: `${guild.members.cache.filter(members => members.user.bot).size}`, inline: true },
 
           { name: 'Total Channels', value: `${guild.channels.cache.size}`, inline: true },
           { name: 'Text Channels', value: `${guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size}`, inline: true },
@@ -48,7 +49,9 @@ export default {
           { name: 'NSFW Level', value: `${guild.nsfwLevel}`, inline: true },
           { name: 'Verification level', value: `${guild.verificationLevel}`, inline: true },
           { name: 'Explicit content filter', value: `${guild.explicitContentFilter}`, inline: true },
-        ]
+        ],
+        timestamp: new Date(),
+        footer: { text: `Guild ID: ${guild.id}`}
       })
       return guildInfo
 

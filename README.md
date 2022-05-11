@@ -23,6 +23,7 @@ WOKCommands
 
 ## HIGH PRIO TODO:
 - [x] Add check functions to every music command to avoid errors
+- [ ] Add play interaction response
 ## LOW PRIO TODO:
 - [ ] Add buttons to !play
 - [ ] Add a language support to all commands
