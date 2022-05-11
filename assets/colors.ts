@@ -1,7 +1,7 @@
-enum colorList {
+enum colorValues {
   embedDefault = '#531D89',
 
 
 }
 
-export default colorList
+export default colorValues

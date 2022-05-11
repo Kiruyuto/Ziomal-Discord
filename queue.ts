@@ -1,8 +1,7 @@
 import { ICommand } from 'wokcommands';
-import { distube } from '../..';
+import { distube } from '.';
 import DCJS from 'discord.js';
-import playCommand from '../music/play';
-import colorList from '../../assets/colors';
+import colorValues from './assets/colors';
 
 export default {
 names: ['queue'],
@@ -10,7 +9,7 @@ aliases: ['q'],
 category: 'Music',
 description: 'Show the queue',
 
-slash: false,
+slash: 'both',
 testOnly: true,
 guildOnly: true,
 
@@ -19,33 +18,31 @@ maxArgs: 1,
 expectedArgs: '<pageNumber>',
 expectedArgsTypes: ['INTEGER'],
 
-callback: async ({client, message, args, instance}) => {
+callback: async ({client, message, args, instance, interaction: slashCmd}) => {
 
-  const guild = message.guild?.id;
-  if (!guild) { return }
+  const Channel = slashCmd.channel as DCJS.TextChannel;
+  distube.emitError(Error('xd'), Channel)
 
-  const queue = distube.getQueue(message.guild.id);
-  if(!queue) { 
-    return new DCJS.MessageEmbed({
-      title: `No queue for ${message.guild.name} has been found`,
-      description: `Add a song to the queue by using \`!${playCommand.names} ${playCommand.expectedArgs}\``,
-      color: `${colorList.embedDefault}`,
-      author: {
-        name: `${client.user?.username}`,
-        iconURL: `${client.user?.displayAvatarURL()}`,
-    },
-    })
-  }
+  // const guild = message.guild?.id;
+  // if (!guild) { return }
 
-  let embeds = []
-  let perPage = 20
-  let songList = queue.songs
+  // const queue = distube.getQueue(message.guild.id);
+  // if(!queue) { 
+  //   return new DCJS.MessageEmbed({
+  //     description: `No queue for **${message ? message.guild?.name : slashCmd.guild?.name}** has been found`,
+  //     color: `${colorValues.embedDefault}`,
+  //   })
+  // }
 
-  for(let i = 0; i< songList.length; i+=perPage) {
-    let cpSongList = songList
-    const current = cpSongList.slice(i, perPage) //all between i and perPage (20)
+  // let embeds = []
+  // let perPage = 20
+  // let songList = queue.songs
 
-  }
+  // for(let i = 0; i< songList.length; i+=perPage) {
+  //   let cpSongList = songList
+  //   const current = cpSongList.slice(i, perPage) //all between i and perPage (20)
+
+  // }
 
 
 

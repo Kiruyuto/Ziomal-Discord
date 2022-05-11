@@ -4,7 +4,7 @@ import { ICommand } from 'wokcommands';
 export default {
   names: ['echo'],
   aliases: ['say'],
-  category: 'Configuration',
+  category: 'Moderation',
   description: 'Sends msg in a channel',
 
   //permissions: ['ADMINISTRATOR'],

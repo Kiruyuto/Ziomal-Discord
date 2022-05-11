@@ -10,31 +10,31 @@ import {
 } from 'discord.js'
 import WOK from 'wokcommands'
 import roleSchema from './models/roles-schema'
-import ID from '../assets/id'
+import IDs from '../assets/id'
 
 const LARoles = {
   //ASSASINS
-  ':XDeathblade': [ID.DEATHBLADE, 'Deathblade', 'Assasin'],
-  ':XShadowhunter': [ID.SHADOWHUNTER, 'Shadowhunter', 'Assasin'],
+  ':XDeathblade': [IDs.DEATHBLADE, 'Deathblade', 'Assasin'],
+  ':XShadowhunter': [IDs.SHADOWHUNTER, 'Shadowhunter', 'Assasin'],
   //GUNNERS
-  ':XArtillerist': [ID.ARTILLERIST, 'Artillerist', 'Gunner'],
-  ':XDeadeye': [ID.DEADEYE, 'Deadeye', 'Gunner'],
-  ':XGunslinger': [ID.GUNSLINGER, 'Gunslinger', 'Gunner'],
-  ':XSharpshooter': [ID.SHARPSHOOTER, 'Sharpshooter', 'Gunner'],
+  ':XArtillerist': [IDs.ARTILLERIST, 'Artillerist', 'Gunner'],
+  ':XDeadeye': [IDs.DEADEYE, 'Deadeye', 'Gunner'],
+  ':XGunslinger': [IDs.GUNSLINGER, 'Gunslinger', 'Gunner'],
+  ':XSharpshooter': [IDs.SHARPSHOOTER, 'Sharpshooter', 'Gunner'],
   //MAGES
-  ':XBard': [ID.BARD, 'Bard', 'Mage'],
-  ':XSorceress': [ID.SORCERESS, 'Sorceress', 'Mage'],
+  ':XBard': [IDs.BARD, 'Bard', 'Mage'],
+  ':XSorceress': [IDs.SORCERESS, 'Sorceress', 'Mage'],
   //MARTIAL ARTISTS
-  ':XGlaivier': [ID.GLAIVIER, 'Glaivier', 'Martial Artist'],
-  ':XScrapper': [ID.SCRAPPER, 'Scrapper', 'Martial Artist'],
-  ':XSoulfist': [ID.SOULFIST, 'Soulfist', 'Martial Artist'],
-  ':XStriker': [ID.STRIKER, 'Striker', 'Martial Artist'],
-  ':XWardancer': [ID.WARDANCER, 'Wardancer', 'Martial Artist'],
+  ':XGlaivier': [IDs.GLAIVIER, 'Glaivier', 'Martial Artist'],
+  ':XScrapper': [IDs.SCRAPPER, 'Scrapper', 'Martial Artist'],
+  ':XSoulfist': [IDs.SOULFIST, 'Soulfist', 'Martial Artist'],
+  ':XStriker': [IDs.STRIKER, 'Striker', 'Martial Artist'],
+  ':XWardancer': [IDs.WARDANCER, 'Wardancer', 'Martial Artist'],
   //WARRIORS
-  ':XBerserker': [ID.BERSERKER, 'Berserker', 'Warrior'],
-  ':XDestroyer': [ID.DESTROYER, 'Destroyer', 'Warrior'],
-  ':XGunlancer': [ID.GUNLANCER, 'Gunlancer', 'Warrior'],
-  ':XPaladin': [ID.PALADIN, 'Paladin', 'Warrior'],
+  ':XBerserker': [IDs.BERSERKER, 'Berserker', 'Warrior'],
+  ':XDestroyer': [IDs.DESTROYER, 'Destroyer', 'Warrior'],
+  ':XGunlancer': [IDs.GUNLANCER, 'Gunlancer', 'Warrior'],
+  ':XPaladin': [IDs.PALADIN, 'Paladin', 'Warrior'],
 } as {
   [key: string]: string[]
 }
@@ -44,13 +44,13 @@ export default async (client: Client, instance: WOK) => {
     return
   }
 
-  const guild = client.guilds.cache.get(ID.GUILD)
+  const guild = client.guilds.cache.get(IDs.GUILD)
   if(!guild) {
     return
   }
 
   const channel = guild.channels.cache.get(
-    ID.ROLE_CLAIM_CHANNEL
+    IDs.ROLE_CLAIM_CHANNEL
   ) as TextChannel
   if(!channel) {
     return
@@ -136,7 +136,7 @@ export default async (client: Client, instance: WOK) => {
   client.on('interactionCreate', (interaction) => {
     if (
       !interaction.isSelectMenu() ||
-      interaction.channelId !== ID.ROLE_CLAIM_CHANNEL
+      interaction.channelId !== IDs.ROLE_CLAIM_CHANNEL
     ) {
       return
     }
