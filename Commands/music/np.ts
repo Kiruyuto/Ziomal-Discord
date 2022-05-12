@@ -1,10 +1,8 @@
 import { ICommand } from 'wokcommands';
 import { distube } from '../../index';
 import DCJS, { GuildMember } from 'discord.js';
-import playCommand from './play';
 import colorValues from '../../assets/colors';
 import IDs from '../../assets/id';
-import imagesLink from '../../assets/images';
 
 export default {
   names: ['np'],
@@ -17,25 +15,22 @@ export default {
   guildOnly: true,
   maxArgs: 0,
 
-  callback: async ({ client, message, interaction: slashCmd }) => {
+  callback: async ({ client, message, interaction: slashCmd, guild }) => {
     try {
-      // Get the guild ID
-      const guild = message ? message.guild?.id : slashCmd.guild?.id
-      if (!guild) { return }
 
-      //Get the queue and return embed if queue doesn't exist
-      let queue = await distube.getQueue(message ? message : (slashCmd.member as GuildMember).guild.id)
+      //Get the queue and return message to the user if queue doesn't exist
+      let queue = await distube.getQueue(guild!)
       if (!queue) {
         return new DCJS.MessageEmbed({
-          description: `No queue for **${message ? message.guild?.name : slashCmd.guild?.name}** has been found`,
-          color: `${colorValues.embedDefault}`,
+          description: `No queue for **${guild}** has been found`,
+          color: colorValues.embedDefault,
         })
       }
 
       //Reply to the user
       const embedCurrentSong = new DCJS.MessageEmbed({
-        color: `${colorValues.embedDefault}`,
-        thumbnail: { url: `${queue.songs[0].thumbnail}` },
+        color: colorValues.embedDefault,
+        thumbnail: { url: queue.songs[0].thumbnail },
         title: `Currently playing:`,
         description: `${queue.songs[0].name}`,
         fields: [
@@ -54,16 +49,15 @@ export default {
         })
       }
 
-
     } catch (error) {
       // Log the error in the console, send message to developer and inform the user about error
       console.log(error)
 
       let embedDev = new DCJS.MessageEmbed({
-        description: `:x: Something went wrong with \`np\` command in the **${(message ? message.guild?.name : slashCmd.guild?.name)}** \`(${message ? message.guild?.id : slashCmd.guild?.id})\` sever!`,
-        color: `${colorValues.embedDefault}`,
+        description: `:x: Something went wrong with \`np\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
+        color: colorValues.embedDefault,
       })
-      const devDM = await client.users.fetch(`${IDs.KIRU}`)
+      const devDM = await client.users.fetch(IDs.KIRU)
         .then(user => user.send({ content: `${error}`, embeds: [embedDev] }))
 
       return new DCJS.MessageEmbed({

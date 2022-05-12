@@ -16,12 +16,10 @@ export default {
   guildOnly: true,
   maxArgs: 0,
 
-  callback: async ({ client, message, interaction: slashCmd }) => {
+  callback: async ({ client, message, interaction: slashCmd, guild }) => {
     try {
-      const guildID = message ? message.guild?.id : slashCmd.guild?.id
-      if (!guildID) { return }
 
-      const queue = await distube.getQueue(guildID);
+      const queue = await distube.getQueue(guild!);
       if (!queue) {
         return new DCJS.MessageEmbed({
           description: `:warning: No queue for **${message ? message.guild?.name : slashCmd.guild?.name}** has been found`,
@@ -30,6 +28,7 @@ export default {
       }
 
       queue.shuffle()
+      
       return new DCJS.MessageEmbed({
         description: ':white_check_mark: Shuffled the queue!',
         color: `${colorList.embedDefault}`,
@@ -41,16 +40,15 @@ export default {
       console.log(error)
 
       let embedDev = new DCJS.MessageEmbed({
-        description: `:x: Something went wrong with \`shuffle\` command in the **${(message ? message.guild?.name : slashCmd.guild?.name)}** \`(${message ? message.guild?.id : slashCmd.guild?.id})\` sever!`,
-        color: `${colorValues.embedDefault}`,
+        description: `:x: Something went wrong with \`join\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
+        color: colorValues.embedDefault,
       })
-      const devDM = await client.users.fetch(`${IDs.KIRU}`)
+      const devDM = await client.users.fetch(IDs.KIRU)
         .then(user => user.send({ content: `${error}`, embeds: [embedDev] }))
 
       return new DCJS.MessageEmbed({
         description: ':x: An error occured! Message has been sent to developer.',
       })
     }
-
   }
 } as ICommand

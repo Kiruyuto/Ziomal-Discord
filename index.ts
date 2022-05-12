@@ -108,7 +108,7 @@ client.on('ready', () => {
     console.error(error)
     let x = new DCJS.MessageEmbed({
       description: `:x: **Distube** has thrown new error!`,
-      color: `${colorValues.embedDefault}`,
+      color: colorValues.embedDefault,
     })
     client.users.fetch(IDs.KIRU)
     .then(user => { user.send({ content: `${error}`, embeds: [x] }) })

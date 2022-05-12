@@ -15,40 +15,41 @@ export default {
   guildOnly: true,
   maxArgs: 0,
 
-  callback: async ({ client, message, interaction: slashCmd }) => {
+  callback: async ({ client, message, interaction: slashCmd, guild, member }) => {
     try {
-      const channel = message ? message.member?.voice.channel : (slashCmd.member as GuildMember).voice.channel
+      //Get the VOICE channel of the user
+      const channel = member.voice.channel
 
       // Check if the channel exist and is proper type
       if (!channel || channel.type !== 'GUILD_VOICE') {
         return new DCJS.MessageEmbed({
           description: ':warning: Channel doesnt exist or is not a valid type!',
-          color: `${colorValues.embedDefault}`
+          color: colorValues.embedDefault
         })
       }
 
-      // Check if the bot is in the same channel as the user
-      if ((message ? message.guild?.me?.voice.channel : slashCmd.guild?.me?.voice.channel) && (message ? message.member?.voice.channel?.id : (slashCmd.member as GuildMember).voice.channel?.id) === (message ? message.guild?.me?.voice.channel?.id : slashCmd.guild?.me?.voice.channel?.id)) {
+      // Check if the user is in the same voice channel as the bot
+      if (guild?.me?.voice.channel && member.voice.channel.id !== guild?.me?.voice.channel?.id) {
         return new DCJS.MessageEmbed({
-          color: `${colorValues.embedDefault}`,
-          description: ':warning: I am already in your channel!',
+          color: colorValues.embedDefault,
+          description: ':warning: You need to be in the same channel as me!',
         })
       }
 
       // Ensure that user can't use the command when bot is already connected
-      if ((message ? message.guild?.me?.voice.channel : slashCmd.guild?.me?.voice.channel) && (message ? message.member?.voice.channel?.id : (slashCmd.member as GuildMember).voice.channel?.id) !== (message ? message.guild?.me?.voice.channel?.id : slashCmd.guild?.me?.voice.channel?.id)) {
+      if (guild?.me?.voice.channel && member?.voice.channel?.id !== guild?.me?.voice.channel?.id) {
         return new DCJS.MessageEmbed({
-          color: `${colorValues.embedDefault}`,
+          color: colorValues.embedDefault,
           description: ':warning: You can\'t use it when im already in the channel!',
         })
       }
 
-      distube.voices.join(channel)
+      distube.voices.join(member.voice.channel)
 
       //Reply to the user with the following embed
       let embedJoined = new DCJS.MessageEmbed({
         description: ':white_check_mark: I joined the channel!',
-        color: `${colorValues.embedDefault}`,
+        color: colorValues.embedDefault,
       })
 
       if (message) {
@@ -66,10 +67,10 @@ export default {
       console.log(error)
 
       let embedDev = new DCJS.MessageEmbed({
-        description: `:x: Something went wrong with \`join\` command in the **${(message ? message.guild?.name : slashCmd.guild?.name)}** \`(${message ? message.guild?.id : slashCmd.guild?.id})\` sever!`,
-        color: `${colorValues.embedDefault}`,
+        description: `:x: Something went wrong with \`join\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
+        color: colorValues.embedDefault,
       })
-      const devDM = await client.users.fetch(`${IDs.KIRU}`)
+      const devDM = await client.users.fetch(IDs.KIRU)
         .then(user => user.send({ content: `${error}`, embeds: [embedDev] }))
 
       return new DCJS.MessageEmbed({
