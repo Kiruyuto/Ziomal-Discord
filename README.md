@@ -32,7 +32,9 @@ WOKCommands
 - [x] !join
 - [x] !np
 - [x] !skip
-- [x] !dc
+- [ ] !dc <= Refactor this one (stop to disconnect / simplify code)
 - [x] !shuffle
+- [x] !server
+- [x] !echo
 - [ ] !queue
-- [ ] !cls
+- [x] !cls
