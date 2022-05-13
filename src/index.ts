@@ -73,7 +73,7 @@ client.on('ready', () => {
       botOwners: IDs.KIRU, 
       delErrMsgCooldown: -1, 
       ignoreBots: true,
-      typeScript: true, 
+      typeScript: false, 
       mongoUri: process.env.MONGO_URI,
       //debug: true, // Display more information in the console
       //showWarns: true, // Display warnings in the console
