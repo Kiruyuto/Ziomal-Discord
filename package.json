@@ -2,10 +2,11 @@
   "name": "ziomal-discord",
   "version": "1.0.0",
   "description": "\"Ziomal\" is a multi-purpose discord bot created as a request for friend ## How to start?   ### Requirements [Node v16](https://nodejs.org/en/download/) or higher   [discord.js](https://discord.js.org/#/) v13 (Recommended)   **TBC**",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.ts"
+    "tsc": "tsc --skipLibCheck --outDir build",
+    "dev": "nodemon src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,8 @@
     "libsodium-wrappers": "^0.7.10",
     "mongoose": "^6.3.3",
     "wokcommands": "^1.5.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
   }
 }

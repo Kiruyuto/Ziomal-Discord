@@ -1,4 +1,4 @@
-import DCJS, { GuildMember, VoiceChannel } from 'discord.js';
+import DCJS from 'discord.js';
 import { ICommand } from 'wokcommands';
 import { distube } from '../..';
 import colorValues from '../../assets/colors';
