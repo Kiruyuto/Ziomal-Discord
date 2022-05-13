@@ -3,6 +3,7 @@ import DCJS, { GuildMember } from 'discord.js';
 import IDs from '../../assets/id';
 import colorValues from '../../assets/colors';
 import { distube } from '../../index';
+import { DisTubeVoice } from 'distube';
 
 export default {
   names: ['dc', 'leave'],
@@ -15,17 +16,8 @@ export default {
   guildOnly: true,
   maxArgs: 0,
 
-  callback: async ({ client, message, interaction: slashCmd }) => {
+  callback: async ({ client, message, interaction: slashCmd, guild }) => {
     try {
-
-      // Get the queue and return error message to the user if there is no queue
-      let queue = await distube.getQueue(message ? message : (slashCmd.member as GuildMember).guild.id)
-      if (!queue) {
-        return new DCJS.MessageEmbed({
-          description: `No queue for **${message ? message.guild?.name : slashCmd.guild?.name}** has been found`,
-          color: colorValues.embedDefault,
-        })
-      }
 
       // Check if the user is in the same voice !channel as the bot and return message if not
       if ((message ? message.guild?.me?.voice.channel : slashCmd.guild?.me?.voice.channel) && (message ? message.member?.voice.channel?.id : (slashCmd.member as GuildMember).voice.channel?.id) !== (message ? message.guild?.me?.voice.channel?.id : slashCmd.guild?.me?.voice.channel?.id)) {
@@ -33,15 +25,30 @@ export default {
           color: colorValues.embedDefault,
           description: ':warning: You need to be in the same channel as me!',
         })
-        
       }
 
-      //delete the queue, disconnect the bot from the voice channel and return message to the user
-      queue.stop();
-      return new DCJS.MessageEmbed({
-        description: `:white_check_mark: Disconnected from **${message ? message.guild?.name : slashCmd.guild?.name}**`,
-        color: colorValues.embedDefault,
-      })
+      //Get the queue, delete it if it exist then disconnect the bot
+      let queue = await distube.getQueue(guild!)
+      if (queue) {
+        queue.stop();
+        return new DCJS.MessageEmbed({
+          description: `:white_check_mark: Removed the queue and disconnected from **${guild}**'s ${guild?.me?.voice.channel}.`,
+          color: colorValues.embedDefault,
+        })
+      } else {
+        if (guild?.me?.voice.channel) {
+          distube.voices.leave(guild!)
+          return new DCJS.MessageEmbed({
+            description: `:white_check_mark: Disconnected from **${guild}**'s ${guild?.me?.voice.channel}.`,
+            color: colorValues.embedDefault,
+          })
+        } else {
+          return new DCJS.MessageEmbed({
+            description: `:warning: I am not connected to any channel!`,
+            color: colorValues.embedDefault,
+          })
+        }
+      }
 
     } catch (error) {
       // Log the error in the console, send message to developer and inform the user about error
