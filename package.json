@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc --skipLibCheck --outDir build",
     "dev": "nodemon src/index.ts",
-    "build": "git pull && tsc --skipLibCheck --downlevelIteration"
+    "build": "git pull && tsc --skipLibCheck --downlevelIteration --outDir build"
   },
   "repository": {
     "type": "git",
