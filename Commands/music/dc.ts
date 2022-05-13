@@ -55,10 +55,10 @@ export default {
       console.log(error)
 
       let embedDev = new DCJS.MessageEmbed({
-        description: `:x: Something went wrong with \`dc\` command in the **${(message ? message.guild?.name : slashCmd.guild?.name)}** \`(${message ? message.guild?.id : slashCmd.guild?.id})\` sever!`,
+        description: `:x: Something went wrong with \`dc\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
         color: colorValues.embedDefault,
       })
-      const devDM = await client.users.fetch(`${IDs.KIRU}`)
+      const devDM = await client.users.fetch(IDs.KIRU)
         .then(user => user.send({ content: `${error}`, embeds: [embedDev] }))
 
       return new DCJS.MessageEmbed({

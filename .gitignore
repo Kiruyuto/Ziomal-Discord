@@ -5,7 +5,6 @@ node_modules/
 .env
 
 # Other Files
-Assets/id.ts
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe
