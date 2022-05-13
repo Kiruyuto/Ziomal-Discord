@@ -1,12 +1,12 @@
 # Dependencies
 node_modules/
+build/
 
 # Discord TOKEN, and other vulnerable data
 .env
 
 
 # Other Files
-build/
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe
