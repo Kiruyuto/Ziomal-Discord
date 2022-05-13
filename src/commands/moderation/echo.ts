@@ -11,7 +11,7 @@ export default {
   slash: 'both',
   ownerOnly: true,
   guildOnly: true,
-  testOnly: true,
+  //testOnly: true,
   hidden: true,
 
   minArgs: 2,

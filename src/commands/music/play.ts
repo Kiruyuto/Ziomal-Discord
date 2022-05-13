@@ -112,6 +112,7 @@ export default {
 
       return new DCJS.MessageEmbed({
         description: ':x: An error occured! Message has been sent to developer.',
+        color: colorValues.embedDefault
       })
     }
   },
