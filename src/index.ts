@@ -42,13 +42,13 @@ export const distube = new DisTube(client, {
   savePreviousSongs: false,
   searchSongs: 0,
   //youtubeCookie: process.env.YOUTUBE_COOKIE,
-  youtubeDL: true,
+  youtubeDL: false,
   ytdlOptions: {
     filter: 'audioonly',
-    highWaterMark: 1024 * 1024 * 64,
+    highWaterMark: 1024 * 1024 * 256,
     quality: 'highestaudio',
-    dlChunkSize: 1024 * 1024 * 64,
-    liveBuffer: 60000,
+    dlChunkSize: 1024 * 1024 * 256,
+    liveBuffer: 6000000,
   },
   searchCooldown: 30,
   emptyCooldown: 300,
@@ -56,7 +56,7 @@ export const distube = new DisTube(client, {
   emitAddSongWhenCreatingQueue: true,
   emitAddListWhenCreatingQueue: true,
   plugins: [ 
-    //new YtDlpPlugin(), 
+    new YtDlpPlugin()
   ],
 })
 
