@@ -30,5 +30,5 @@ WOKCommands
 - [x] !shuffle
 - [x] !server
 - [x] !echo
-- [x] !queue <= ?
+- [x] !queue
 - [x] !cls
