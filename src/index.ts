@@ -40,7 +40,7 @@ export const distube = new DisTube(client, {
   leaveOnStop: true,
   savePreviousSongs: false,
   searchSongs: 0,
-  //youtubeCookie: process.env.YOUTUBE_COOKIE,
+  youtubeCookie: process.env.YOUTUBE_COOKIE,
   youtubeDL: false,
   ytdlOptions: {
     filter: 'audioonly',
