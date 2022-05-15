@@ -16,7 +16,7 @@ const client = new DCJS.Client({
         Intents.FLAGS.GUILD_MEMBERS
     ],
     allowedMentions: {
-      roles: [],
+      roles: [IDs.REKRUTER],
       repliedUser: false,
     },
     presence: {

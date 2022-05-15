@@ -25,7 +25,10 @@ export default async (client: Client, instance: WOK) => {
     title: `Regulamin "**${guild.name}**"`,
     color: colorValues.embedDefault,
     description: '1. XXX\n 2. XXX\n 3. XXX\n\n Wejdź na kanał i kliknij :bell: aby nas o tym powiadomić,\nalbo naciśnij :x: aby wypierdalać <:kekw:723509048087150693>\n\n\nKURWY JEBANE ODRADZAM KLIKAĆ BO ZOSTAWIAM TAK JAK JEST I IDĘ SPAĆ A NIE BEDE POZNIEJ NIKOGO ODBANOWYWAĆ :D',
-    fields: [{ name: 'WYLACZYLEM X BO WAM NIE UFAM', value: 'ESSA JEBAĆ DISA', inline: true }],
+    fields: [
+      { name: 'WYLACZYLEM X BO WAM NIE UFAM', value: 'ESSA JEBAĆ DISA', inline: true },
+      { name: 'qs kurwom jest', value: 'tak jest', inline: true },
+    ],
 
   })
   const row = new MessageActionRow()
