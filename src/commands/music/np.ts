@@ -22,7 +22,7 @@ export default {
       let queue = await distube.getQueue(guild!)
       if (!queue) {
         return new DCJS.MessageEmbed({
-          description: `No queue for **${guild}** has been found`,
+          description: `:warning: No queue for **${guild}** has been found`,
           color: colorValues.embedDefault,
         })
       }

@@ -13,6 +13,9 @@ import roleSchema from './models/roles-schema'
 import IDs from '../assets/id'
 
 const LARoles = {
+  //OTHER ROLES
+  ':XLostArk': [IDs.LOST_ARK, 'Lost Ark', 'Zaznacz, jesli grasz w Lost Ark\'a!'],
+  ':XWarframe': [IDs.WARFRAME, 'Warframe', 'Zaznacz, jesli grasz w Warframe\'a!'],
   //ASSASINS
   ':XDeathblade': [IDs.DEATHBLADE, 'Deathblade', 'Assasin'],
   ':XShadowhunter': [IDs.SHADOWHUNTER, 'Shadowhunter', 'Assasin'],
@@ -60,7 +63,7 @@ export default async (client: Client, instance: WOK) => {
   const keys = Object.keys(LARoles)
   const rows: MessageActionRow[] = []
   const options: MessageSelectOptionData[] = []
-  const text = 'Ktorymi klasami grasz?'
+  const text = 'Wybierz swoje role!'
 
   for(let a = 0; a < keys.length; ++a) {
     let emoji: string | GuildEmoji = keys[a]

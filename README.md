@@ -15,11 +15,12 @@ WOKCommands
 # So far these are the only valuable informations 
 ## TODO:
 - [ ] Add more music commands
-- [ ] Build custom help menu  
+- [ ] Build custom help menu
 ## LOW PRIO TODO:
 - [ ] Add buttons to !play
 - [ ] Add a language support to all commands
-
+- [x] Add embed pagination to !queue
+- [ ] Finish "regulamin" feature
 ### Finished, bug-free command:
 - [x] !play
 - [x] !join
@@ -29,5 +30,5 @@ WOKCommands
 - [x] !shuffle
 - [x] !server
 - [x] !echo
-- [ ] !queue
+- [x] !queue <= ?
 - [x] !cls
