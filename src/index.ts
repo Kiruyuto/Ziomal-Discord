@@ -22,7 +22,7 @@ const client = new DCJS.Client({
   presence: {
     status: "dnd",
     activities: [{
-      name: '~80% done',
+      name: '~80% finished',
       type: 'PLAYING',
     }]
   },
