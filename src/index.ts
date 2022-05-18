@@ -20,9 +20,9 @@ const client = new DCJS.Client({
     repliedUser: false,
   },
   presence: {
-    status: "dnd",
+    status: "online",
     activities: [{
-      name: '~80% Done',
+      name: '~85% Done',
       type: 'PLAYING',
     }]
   },

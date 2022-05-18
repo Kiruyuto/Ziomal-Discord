@@ -12,5 +12,5 @@ const schema = new Schema({
   messageId: reqString,
 })
 
-const name = 'Regulamin'
+const name = 'Rules'
 export default mongoose.models[name] || mongoose.model(name, schema, name)
