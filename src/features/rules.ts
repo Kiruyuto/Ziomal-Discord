@@ -95,12 +95,13 @@ export default async (client: Client, instance: WOK) => {
       // @everyone counts as a role so to make bot kick only users w/o cache.size has to be 1 or less
       if ((interaction.member as GuildMember).roles.cache.size <= 1) {
         if (interaction.customId === 'alert') {
-          gadka.send(`<@&${IDs.REKRUTER}> => ${interaction.member} czeka na rekrutacje`)
+          gadka.send(`<@&${IDs.REKRUTER}> => ${interaction.member} (${interaction.user.tag}) czeka na rekrutacje`)
           interaction.reply({
             content: 'Powiadomiono!',
             ephemeral: true
           })
         } else if (interaction.customId === 'kick') {
+          gadka.send(`${interaction.member} (${interaction.user.tag}) zostal wyrzucony z serwera`)
           interaction.reply({
             content: 'Eluwina!',
             ephemeral: true
@@ -121,7 +122,7 @@ export default async (client: Client, instance: WOK) => {
     if (!guild) { return }
 
     let embedDev = new DCJS.MessageEmbed({
-      description: `:x: Something went wrong with \`np\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
+      description: `:x: Something went wrong withing \`rules\` feature in the **${guild}** \`(${guild?.id}})\` sever!`,
       color: colorValues.embedDefault,
     })
     const devDM = await client.users.fetch(IDs.KIRU)

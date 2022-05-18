@@ -17,9 +17,9 @@ export default {
 
   callback: async ({ client, guild }) => {
     try {
-      // await guild!.members.fetch()
-      // await guild!.channels.fetch()
-      await guild!.fetch()
+      await guild!.members.fetch()
+      await guild!.channels.fetch()
+      //await guild!.fetch()
       const guildInfo = new DCJS.MessageEmbed({
         title: `${guild!.name}`,
         description: `${guild!.name} was created on ${`<t:${Math.round(new Date(guild!.createdTimestamp).getTime() / 1000)}:F>`}`,
