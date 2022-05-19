@@ -58,7 +58,6 @@ export default {
       // Define if the user wants to play smth from link or search (for legacy commands)
       let queue = await distube.getQueue(guild!)
       let search = args.join(' ')
-      console.log(args.length + ': ' + args + '\n' + args.length + ': ' + search)
       if (!queue) {
         if (args.length > 1) {
           await distube.play(voicChannel, search)
