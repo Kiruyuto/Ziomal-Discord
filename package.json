@@ -23,7 +23,7 @@
   "homepage": "https://github.com/Kiruyuto/Ziomal-Discord#readme",
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
-    "@discordjs/voice": "^0.9.0",
+    "@discordjs/voice": "^0.10.0",
     "@distube/yt-dlp": "^1.0.2",
     "discord.js": "^13.7.0",
     "distube": "^3.3.4",
