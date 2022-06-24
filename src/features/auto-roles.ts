@@ -13,9 +13,6 @@ import roleSchema from './models/roles-schema'
 import IDs from '../assets/id'
 
 const LARoles = {
-  //OTHER ROLES
-  ':XLostArk': [IDs.LOST_ARK, 'Lost Ark', 'Zaznacz, jesli grasz w Lost Ark\'a!'],
-  ':XWarframe': [IDs.WARFRAME, 'Warframe', 'Zaznacz, jesli grasz w Warframe\'a!'],
   //ASSASINS
   ':XDeathblade': [IDs.DEATHBLADE, 'Deathblade', 'Assasin'],
   ':XShadowhunter': [IDs.SHADOWHUNTER, 'Shadowhunter', 'Assasin'],
@@ -43,19 +40,19 @@ const LARoles = {
 }
 
 export default async (client: Client, instance: WOK) => {
-  if(!instance.isDBConnected()) {
+  if (!instance.isDBConnected()) {
     return
   }
 
   const guild = client.guilds.cache.get(IDs.GUILD)
-  if(!guild) {
+  if (!guild) {
     return
   }
 
   const channel = guild.channels.cache.get(
     IDs.ROLE_CLAIM_CHANNEL
   ) as TextChannel
-  if(!channel) {
+  if (!channel) {
     return
   }
 
@@ -65,11 +62,11 @@ export default async (client: Client, instance: WOK) => {
   const options: MessageSelectOptionData[] = []
   const text = 'Wybierz swoje role!'
 
-  for(let a = 0; a < keys.length; ++a) {
+  for (let a = 0; a < keys.length; ++a) {
     let emoji: string | GuildEmoji = keys[a]
     const [id, roleName, desc] = LARoles[emoji]
 
-    if(emoji.startsWith(':')) {
+    if (emoji.startsWith(':')) {
       emoji = guild.emojis.cache.find((e) => {
         if (typeof emoji === 'string') {
           return e.name === emoji.substring(1)
@@ -98,13 +95,13 @@ export default async (client: Client, instance: WOK) => {
     )
   )
 
-  if(results) {
+  if (results) {
     const message = (await channel.messages
       .fetch(results.messageId, {
         cache: true,
         force: true,
       })
-      .catch(() => {})) as Message
+      .catch(() => { })) as Message
 
     if (message) {
       message.edit({
@@ -116,7 +113,7 @@ export default async (client: Client, instance: WOK) => {
     }
   }
 
-  if(!results) {
+  if (!results) {
     const message = await channel.send({
       content: text,
       components: rows,
@@ -146,16 +143,16 @@ export default async (client: Client, instance: WOK) => {
 
     const { customId, values, member } = interaction
 
-    if(customId === 'role_select' && member instanceof GuildMember) {
+    if (customId === 'role_select' && member instanceof GuildMember) {
       const component = interaction.component as MessageSelectMenu
       const removed = component.options.filter(
         (role) => !values.includes(role.value)
       )
-      for(const id of removed) {
+      for (const id of removed) {
         member.roles.remove(id.value)
       }
 
-      for(const id of values) {
+      for (const id of values) {
         member.roles.add(id)
       }
 

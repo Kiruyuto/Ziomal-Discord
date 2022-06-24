@@ -51,7 +51,7 @@ export default {
           { name: 'Explicit content filter', value: `${guild!.explicitContentFilter}`, inline: true },
         ],
         timestamp: new Date(),
-        footer: { text: `Guild ID: ${guild!.id}`}
+        footer: { text: `Guild ID: ${guild!.id}` }
       })
       return guildInfo
 

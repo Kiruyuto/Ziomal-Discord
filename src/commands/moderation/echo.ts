@@ -7,24 +7,23 @@ export default {
   category: 'Moderation',
   description: 'Sends msg in a channel',
 
-  //permissions: ['ADMINISTRATOR'],
+  permissions: ['ADMINISTRATOR'],
   slash: 'both',
-  ownerOnly: true,
+  //ownerOnly: true,
   guildOnly: true,
   //testOnly: true,
   hidden: true,
-
   minArgs: 2,
   expectedArgs: '<channel> <message>',
   expectedArgsTypes: ['CHANNEL', 'STRING'],
-  
-  callback: ({message, interaction, args }) => {
-    const channel = (message 
-      ? message.mentions.channels.first() 
+
+  callback: ({ message, interaction, args }) => {
+    const channel = (message
+      ? message.mentions.channels.first()
       : interaction.options.getChannel('channel')
     ) as TextChannel
-    
-    if(!channel || channel.type !== 'GUILD_TEXT') {
+
+    if (!channel || channel.type !== 'GUILD_TEXT') {
       return 'Unable to fetch channel ID from message or interaction'
     }
 
@@ -32,7 +31,7 @@ export default {
     const txt = args.join(' ')
     channel.send(txt)
 
-    if(interaction) {
+    if (interaction) {
       interaction.reply({
         content: 'Message sent',
         ephemeral: true,

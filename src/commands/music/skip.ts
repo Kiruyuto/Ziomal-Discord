@@ -13,12 +13,10 @@ export default {
   slash: 'both',
   //testOnly: true,
   guildOnly: true,
-
   maxArgs: 0,
 
   callback: async ({ client, message, interaction: slashCmd, member, guild, channel }) => {
     try {
-
       // Check if the user is in the same voice channel as the bot
       if (guild?.me?.voice.channel && member.voice.channel?.id !== guild?.me?.voice.channel?.id) {
         return new DCJS.MessageEmbed({
@@ -51,7 +49,6 @@ export default {
         })
       }
 
-      
     } catch (error) {
       // Log the error in the console, send message to developer and inform the user about error
       console.log(error)

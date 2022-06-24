@@ -18,7 +18,6 @@ export default {
 
   callback: async ({ client, message, interaction: slashCmd, guild }) => {
     try {
-
       const queue = await distube.getQueue(guild!);
       if (!queue) {
         return new DCJS.MessageEmbed({
@@ -28,7 +27,7 @@ export default {
       }
 
       queue.shuffle()
-      
+
       return new DCJS.MessageEmbed({
         description: ':white_check_mark: Shuffled the queue!',
         color: `${colorList.embedDefault}`,

@@ -4,18 +4,17 @@ import IDs from '../assets/id';
 import { TextChannel } from 'discord.js';
 import regulaminSchema from './models/rules-schema';
 import WOK from 'wokcommands';
+import * as fs from 'fs';
 
-const desc = "**1.** Garda wysoko\n\
-**2.** Nie daj sie zabić\n\
-**3.** Miej dystans do siebie\n\
-**4.** Tu se coś wymyśl bo nam sie skończyły pomysły\n\
-**5.** Zawsze mam racje nawet jak nie mam racji :sunglasses:\n\n\n\
-Jeśli taki regulamin ci odpowiada - wejdź na kanał i naciśnij :bell:\n\
-Jeśli nie planujesz się do tych zasad zastosować - nacisnij :x:\n\
-Jeśli chcesz sprawdzić z jakim autyzmem masz do czynienia - kliknij w :link:"
+
+
 
 export default async (client: Client, instance: WOK) => {
   try {
+
+    const desc = await fs.promises.readFile('rules.txt','utf-8');
+
+
     if (!instance.isDBConnected()) { return }
     const guild = client.guilds.cache.get(IDs.GUILD)
     if (!guild) { return }
@@ -92,7 +91,7 @@ export default async (client: Client, instance: WOK) => {
     }
 
     collector.on('collect', interaction => {
-      // @everyone counts as a role so to make bot kick only users w/o cache.size has to be 1 or less
+      // @everyone counts as a role so to make bot kick only users w/o roles, cache.size has to be 1 or less
       if ((interaction.member as GuildMember).roles.cache.size <= 1) {
         if (interaction.customId === 'alert') {
           gadka.send(`<@&${IDs.REKRUTER}> => ${interaction.member} (${interaction.user.tag}) czeka na rekrutacje`)

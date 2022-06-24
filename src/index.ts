@@ -22,8 +22,8 @@ const client = new DCJS.Client({
   presence: {
     status: "online",
     activities: [{
-      name: '~85% Done',
-      type: 'PLAYING',
+      name: 'JS enjoyer',
+      type: 'LISTENING',
     }]
   },
   restTimeOffset: 0,
@@ -32,7 +32,7 @@ const client = new DCJS.Client({
 // Unlimited event listeners
 client.setMaxListeners(0)
 
-// Distube options - details in docs
+// Distube client & options
 export const distube = new DisTube(client, {
   emitNewSongOnly: false,
   leaveOnEmpty: true,
@@ -66,7 +66,7 @@ client.on('ready', () => {
   const wok = new WOK(client, {
     commandDir: path.join(__dirname, 'commands'),
     featureDir: path.join(__dirname, 'features'),
-    messagesPath: path.join(__dirname, 'languages/langs.json'),
+    //messagesPath: path.join(__dirname, 'languages/langs.json'), // Deleted because no point in implementing halfway done feature
     defaultLanguage: 'english',
     testServers: IDs.GUILD_TEST,
     botOwners: IDs.KIRU,
@@ -74,8 +74,8 @@ client.on('ready', () => {
     ignoreBots: true,
     typeScript: process.env.TYPESCRIPT === 'true' ? true : false,
     mongoUri: process.env.MONGO_URI,
-    //debug: true, // Display more information in the console
-    //showWarns: true, // Display warnings in the console
+    //debug: true,
+    //showWarns: true,
   })
     .setDefaultPrefix('!')
 
@@ -114,8 +114,6 @@ client.on('ready', () => {
     let ChannelEmbed = new DCJS.MessageEmbed({ description: ':x: An error with music player occured! Message has been sent to developer.' })
     channel.send({ embeds: [ChannelEmbed] })
   })
-
-
 })
 
 const token = process.env.DC_TOKEN

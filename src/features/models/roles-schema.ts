@@ -6,9 +6,7 @@ const reqString = {
 }
 
 const schema = new Schema({
-  // Guild ID
   _id: reqString,
-  // Message ID
   messageId: reqString,
 })
 

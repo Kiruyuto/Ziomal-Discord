@@ -58,8 +58,6 @@ export default {
         })
       }
 
-
-
       //Define page with links and titles for every 10 songs
       let sliceEnd = 10
       let songList = queue.songs

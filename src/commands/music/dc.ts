@@ -18,7 +18,6 @@ export default {
 
   callback: async ({ client, message, interaction: slashCmd, guild }) => {
     try {
-
       // Check if the user is in the same voice !channel as the bot and return message if not
       if ((message ? message.guild?.me?.voice.channel : slashCmd.guild?.me?.voice.channel) && (message ? message.member?.voice.channel?.id : (slashCmd.member as GuildMember).voice.channel?.id) !== (message ? message.guild?.me?.voice.channel?.id : slashCmd.guild?.me?.voice.channel?.id)) {
         return new DCJS.MessageEmbed({
@@ -53,11 +52,11 @@ export default {
     } catch (error) {
       // Log the error in the console, send message to developer and inform the user about error
       console.log(error)
-
       let embedDev = new DCJS.MessageEmbed({
         description: `:x: Something went wrong with \`dc\` command in the **${guild}** \`(${guild?.id}})\` sever!`,
         color: colorValues.embedDefault,
       })
+      
       const devDM = await client.users.fetch(IDs.KIRU)
         .then(user => user.send({ content: `${error}`, embeds: [embedDev] }))
 
