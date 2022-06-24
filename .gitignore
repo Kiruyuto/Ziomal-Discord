@@ -7,6 +7,7 @@ build/
 
 
 # Other Files
+rules.txt
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe
